@@ -9,7 +9,8 @@ Game catalog groups like [No-Intro](https://no-intro.org/) and [Redump](https://
 
 To obtain DAT files from [No-Intro](https://no-intro.org/) for use with the tools in this repository:
 
-1. Go to the "Daily" section of the No-Intro DAT-o-MATIC website's "Download" page: https://datomatic.no-intro.org/index.php?page=download&s=64&op=daily
+1. Go to the "Daily" section of the No-Intro DAT-o-MATIC website's "Download" page
+    * https://datomatic.no-intro.org/index.php?page=download&s=64&op=daily
 2. Keep all parameters as their defaults, and click "Request"
 3. Click "Download!"
 4. Extract the downloaded ZIP file to access the No-Intro DAT files
