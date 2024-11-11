@@ -1,3 +1,16 @@
+# Additional files
+*.7z
+*.bin
+*.chd
+*.cue
+*.dat
+*.gb
+*.gba
+*.gbc
+*.gz
+*.nes
+*.zip
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
