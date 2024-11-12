@@ -56,7 +56,7 @@ def load_dat(fn, game_name=False):
             if game_name:
                 if 'name' not in game.attrib:
                     raise ValueError("Invalid DAT: %s" % fn)
-                curr = {'name': game.attrib['name'], 'size': sum(rom.attrib['size'] for rom in game.findall('rom') if 'size' in rom.attrib)}
+                curr = {'name': game.attrib['name'], 'size': sum(int(rom.attrib['size']) for rom in game.findall('rom') if 'size' in rom.attrib)}
                 data.append(curr)
             else:
                 for rom in game.findall('rom'):
