@@ -74,8 +74,12 @@ def match_roms(data, games_path):
     rom_match = {'.'.join(d['name'].split('.')[:-1]) : None for d in data}; missing = set()
     for path in games_path.rglob('*'):
         if path.is_file():
-            if path.stem in rom_match and rom_match[path.stem] is None:
-                rom_match[path.stem] = path
+            fn = path.name.strip()
+            if fn.lower().endswith('.gz'):
+                fn = fn[:-3]
+            fn = '.'.join(fn.split('.')[:-1])
+            if fn in rom_match and rom_match[fn] is None:
+                rom_match[fn] = path
             else:
                 missing.add(path)
     return rom_match, missing
