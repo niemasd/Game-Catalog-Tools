@@ -17,7 +17,8 @@ def parse_args():
     parser.add_argument('-d', '--dat', required=True, type=str, help="Input DAT File (No-Intro or Redump)")
     parser.add_argument('-g', '--games', required=True, type=str, help="Input Games Folder")
     parser.add_argument('-o', '--output', required=False, type=str, default='stdout', help="Output Results (TSV)")
-    parser.add_argument('-m', '--show_match', action='store_true', help="Show Matches in Output")
+    parser.add_argument('--show_match', action='store_true', help="Show Matches in Output")
+    parser.add_argument('--game_name', action='store_true', help="Use Game Names Instead of ROM Names")
     args = parser.parse_args()
 
     # check args for validity and return
@@ -48,18 +49,24 @@ def open_file(fn, mode='rt'):
     return f
 
 # load DAT file as list of dict
-def load_dat(fn):
+def load_dat(fn, game_name=False):
     data = list()
     with open_file(fn, 'rt') as f:
         for game in ElementTree.fromstring(f.read()).findall('game'):
-            for rom in game.findall('rom'):
-                if 'name' not in rom.attrib:
+            if game_name:
+                if 'name' not in game.attrib:
                     raise ValueError("Invalid DAT: %s" % fn)
-                curr = {'name': rom.attrib['name']}
-                for k in ['size', 'crc', 'md5', 'sha1', 'sha256']:
-                    if k in rom.attrib:
-                        curr[k] = rom.attrib[k]
+                curr = {'name': game.attrib['name'], 'size': sum(rom.attrib['size'] for rom in game.findall('rom') if 'size' in rom.attrib)}
                 data.append(curr)
+            else:
+                for rom in game.findall('rom'):
+                    if 'name' not in rom.attrib:
+                        raise ValueError("Invalid DAT: %s" % fn)
+                    curr = {'name': rom.attrib['name']}
+                    for k in ['size', 'crc', 'md5', 'sha1', 'sha256']:
+                        if k in rom.attrib:
+                            curr[k] = rom.attrib[k]
+                    data.append(curr)
     return data
 
 # match ROMs from games path to DAT file
@@ -82,7 +89,7 @@ def main():
     out_f = open_file(args.output, 'wt')
 
     # check games
-    data = load_dat(dat_path)
+    data = load_dat(dat_path, game_name=args.game_name)
     rom_match, missing = match_roms(data, games_path)
     out_f.write('Database Entry: %s\tGame: %s\n' % (dat_path, games_path))
     for db_name in sorted(rom_match.keys()):
