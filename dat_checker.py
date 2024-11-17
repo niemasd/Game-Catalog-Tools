@@ -62,7 +62,7 @@ def load_dat(fn, game_name=False):
                 for rom in game.findall('rom'):
                     if 'name' not in rom.attrib:
                         raise ValueError("Invalid DAT: %s" % fn)
-                    curr = {'name': rom.attrib['name']}
+                    curr = {'name': '.'.join(rom.attrib['name'].split('.')[:-1])}
                     for k in ['size', 'crc', 'md5', 'sha1', 'sha256']:
                         if k in rom.attrib:
                             curr[k] = rom.attrib[k]
@@ -71,7 +71,7 @@ def load_dat(fn, game_name=False):
 
 # match ROMs from games path to DAT file
 def match_roms(data, games_path):
-    rom_match = {'.'.join(d['name'].split('.')[:-1]) : None for d in data}; missing = set()
+    rom_match = {d['name']:None for d in data}; missing = set()
     for path in games_path.rglob('*'):
         if path.is_file():
             fn = path.name.strip()
