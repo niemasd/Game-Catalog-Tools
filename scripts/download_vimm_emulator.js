@@ -54,7 +54,7 @@ request.onsuccess = function (event) {
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `${key}.nds`; // Use the key as the file name
+            a.download = `${key}.zip`; // Use the key as the file name
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
