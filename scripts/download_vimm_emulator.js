@@ -14,7 +14,7 @@ request.onsuccess = function (event) {
         const keys = event.target.result;
 
         // Find the first key that starts with "data.php"
-        const key = keys.find(k => k.startsWith('data.php'));
+        const key = keys.findLast(k => k.startsWith('data.php'));
 
         if (!key) {
             console.error('No key found starting with "data.php"');
