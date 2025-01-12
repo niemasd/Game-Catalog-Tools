@@ -90,7 +90,7 @@ def main():
     args = parse_args()
     dat_path = Path(args.dat).resolve()
     games_path = Path(args.games).resolve()
-    out_f = open_file(args.output, 'wt')
+    out_f = open_file(args.output, 'wt', encoding='utf-8')
 
     # check games
     data = load_dat(dat_path, game_name=args.game_name)
