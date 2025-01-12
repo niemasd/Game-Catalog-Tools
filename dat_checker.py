@@ -31,7 +31,7 @@ def parse_args():
     return args
 
 # open file for reading/writing
-def open_file(fn, mode='rt', encoding='utf-8'):
+def open_file(fn, mode='rt', encoding='utf-8-sig'):
     if isinstance(fn, PurePath):
         fn = str(fn.resolve()) # get absolute path as string
     if not isinstance(fn, str):
@@ -90,7 +90,7 @@ def main():
     args = parse_args()
     dat_path = Path(args.dat).resolve()
     games_path = Path(args.games).resolve()
-    out_f = open_file(args.output, 'wt', encoding='utf-8')
+    out_f = open_file(args.output, 'wt')
 
     # check games
     data = load_dat(dat_path, game_name=args.game_name)
