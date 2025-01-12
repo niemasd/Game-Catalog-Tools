@@ -43,9 +43,9 @@ def open_file(fn, mode='rt', encoding='utf-8-sig'):
     elif fn == 'stderr':
         from sys import stderr as f
     elif fn.lower().endswith('.gz'):
-        f = gopen(fn, mode)
+        f = gopen(fn, mode, encoding=encoding)
     else:
-        f = open(fn, mode)
+        f = open(fn, mode, encoding=encoding)
     return f
 
 # load DAT file as list of dict
